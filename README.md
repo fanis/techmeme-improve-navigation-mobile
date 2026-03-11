@@ -4,6 +4,8 @@ A Greasemonkey-compatible userscript for mobile browsers that makes the browser 
 
 > **Latest Version**: 1.0.0 | [See What's New](CHANGELOG.md)
 
+![Tap story, overlay opens, browser Back returns to main page](screenshots/hero.jpg)
+
 ## Table of Contents
 - [Problem](#problem)
 - [Solution](#solution)
