@@ -2,7 +2,7 @@
 
 A Greasemonkey-compatible userscript for mobile browsers that makes the browser Back and Forward gestures work correctly with Techmeme’s in-page "more" overlays.
 
-> **Latest Version**: 1.0.0 | [See What's New](CHANGELOG.md)
+> **Latest Version**: 1.0.1 | [See What's New](CHANGELOG.md)
 
 ![Tap story, overlay opens, browser Back returns to main page](screenshots/hero.jpg)
 
@@ -49,8 +49,8 @@ No page reloads. No interference with outbound article links.
 4. Click "Install"
 
 The script automatically runs on:
-- `https://techmeme.com/*`
-- `https://www.techmeme.com/*`
+- `https://techmeme.com/m/`
+- `https://www.techmeme.com/m/`
 
 ## How it works (high level)
 

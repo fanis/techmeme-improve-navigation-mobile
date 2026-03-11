@@ -3,10 +3,10 @@
 // @namespace    https://fanis.dev/userscripts
 // @author       Fanis Hatzidakis
 // @license      PolyForm-Internal-Use-1.0.0; https://polyformproject.org/licenses/internal-use/1.0.0/
-// @version      1.0.0
+// @version      1.0.1
 // @description  Adds a history entry when tapping Techmeme's "more" link on each story on its mobile site so Browser Back closes the overlay and Forward reopens it.
-// @match        https://www.techmeme.com/*
-// @match        https://techmeme.com/*
+// @match        https://www.techmeme.com/m/
+// @match        https://techmeme.com/m/
 // @run-at       document-start
 // @grant        none
 // ==/UserScript==
@@ -22,6 +22,7 @@
   "use strict";
 
   const HASH_PREFIX = "#tm_more=";
+  let closingViaBackSelector = false;
 
   const parseItemIdFromOnclick = (onclick) => {
     if (!onclick) return null;
@@ -74,6 +75,17 @@
   document.addEventListener(
     "click",
     (e) => {
+      // When Techmeme's own "Back" link is clicked while our hash is active,
+      // go back in history so the pushed state is popped cleanly.
+      if (
+        location.hash.startsWith(HASH_PREFIX) &&
+        e.target?.closest?.("#back_selector")
+      ) {
+        closingViaBackSelector = true;
+        history.back();
+        return;
+      }
+
       const cell = e.target?.closest?.("td.nav_to_more");
       if (!cell) return;
 
@@ -93,6 +105,11 @@
 
     // Back: returning to base URL (no tm_more hash) -> close overlay.
     if (!hash.startsWith(HASH_PREFIX)) {
+      // Techmeme already closed the overlay via its own handler.
+      if (closingViaBackSelector) {
+        closingViaBackSelector = false;
+        return;
+      }
       const closed = closeOverlay();
       if (!closed) {
         location.replace(`${location.pathname}${location.search}`);
